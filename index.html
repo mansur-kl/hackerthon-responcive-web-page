@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>my-app</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+  
+  </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+  <nav class="navbar">
+    <a class="navbar-brand">Conference Management System</a>
+  </nav>
+
+<!-- REGISTER PAGE -->
+<section class="container py-4" id="registerPage">
+  <h2 class="text-center mb-3">User Registration</h2>
+  <div class="card p-4 mx-auto" style="max-width: 600px;">
+    <form id="registerForm">
+
+      <label>First Name</label>
+      <input type="text" id="firstName" class="form-control mb-3" required>
+
+      <label>Last Name</label>
+      <input type="text" id="lastName" class="form-control mb-3" required>
+
+      <label>Email</label>
+      <input type="email" id="regEmail" class="form-control mb-3" required>
+
+      <label>Phone Number</label>
+      <input type="tel" id="phone" class="form-control mb-3" required>
+
+      <label>Password</label>
+      <input type="password" id="regPass" class="form-control mb-3" required>
+
+      <button type="submit" class="btn btn-main w-100">Save Registration</button>
+
+    </form>
+  </div>
+</section>
+
+<!-- LOGIN PAGE -->
+<section class="container py-4 d-none" id="loginPage">
+  <h2 class="text-center mb-3">User Login</h2>
+  <div class="card p-4 mx-auto" style="max-width: 600px;">
+    <form id="loginForm">
+
+      <label>Email</label>
+      <input type="email" id="loginEmail" class="form-control mb-3" required>
+
+      <label>Password</label>
+      <input type="password" id="loginPass" class="form-control mb-3" required>
+
+      <button type="submit" class="btn btn-main w-100">Login</button>
+
+    </form>
+  </div>
+</section>
+
+<!-- PAPER SUBMISSION -->
+<section class="container py-4 d-none" id="submission">
+  <h2 class="text-center mb-3">Paper Submission</h2>
+  <div class="card p-4 mx-auto" style="max-width: 650px;">
+    <form id="paperForm">
+
+      <label>Paper Title</label>
+      <input type="text" class="form-control mb-3" required>
+
+      <label>Upload Paper File</label>
+      <input type="file" class="form-control mb-3" required>
+
+      <button class="btn btn-main w-100">Submit Paper</button>
+
+    </form>
+  </div>
+</section>
+
+<!-- SCHEDULE PAGE -->
+<section class="container py-4 d-none" id="schedule">
+  <h2 class="text-center mb-4">Conference Schedule</h2>
+
+  <div class="row text-center">
+
+    <div class="col-md-4">
+      <div class="card p-3 mb-3">
+        <h5>Day 1</h5>
+        <p>09:00 – Inauguration</p>
+        <p>11:00 – Keynote Speech</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-3 mb-3">
+        <h5>Day 2</h5>
+        <p>10:00 – Paper Presentations</p>
+        <p>02:00 – Workshop</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-3 mb-3">
+        <h5>Day 3</h5>
+        <p>09:30 – Panel Discussion</p>
+        <p>04:00 – Closing Ceremony</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="text-center mt-3">
+    <button id="goContact" class="btn btn-main">Go to Contact</button>
+  </div>
+
+</section>
+
+<!-- CONTACT PAGE -->
+<section class="container py-4 d-none" id="contact">
+  <h2 class="text-center mb-3">Contact Us</h2>
+
+  <div class="card p-4 mx-auto" style="max-width: 650px;">
+
+    <h4 class="mb-3 text-success">Conference Contact Information</h4>
+
+    <p><b>Author Name:</b> Shaik Mansur</p>
+    <p><b>Email:</b> mansur@gmail.com</p>
+    <p><b>Phone:</b>  94920 98297 </p>
+
+    <hr>
+
+    <form>
+      <label>Your Name</label>
+      <input type="text" class="form-control mb-3" required>
+
+      <label>Email</label>
+      <input type="email" class="form-control mb-3" required>
+
+      <label>Phone Number</label>
+      <input type="tel" class="form-control mb-3" required>
+
+      <label>Message</label>
+      <textarea class="form-control mb-3" rows="3" required></textarea>
+
+      <button class="btn btn-main w-100">Send Message</button>
+    </form>
+
+  </div>
+</section>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+// REGISTER
+registerForm.addEventListener("submit", function(e) {
+  e.preventDefault();
+  localStorage.setItem("email", regEmail.value);
+  localStorage.setItem("password", regPass.value);
+
+  alert("Registration Successful!");
+  showPage("loginPage");
+});
+
+
+// LOGIN
+loginForm.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  if (loginEmail.value === localStorage.getItem("email") &&
+      loginPass.value === localStorage.getItem("password")) {
+
+      showPage("submission");
+
+  } else {
+      alert("Invalid Email or Password!");
+  }
+});
+
+// PAPER SUBMISSION
+paperForm.addEventListener("submit", function(e) {
+  e.preventDefault();
+  showPage("schedule");
+});
+
+// GO TO CONTACT WORKS NOW
+document.getElementById("goContact").addEventListener("click", function () {
+  showPage("contact");
+});
+
+// PAGE SWITCH FUNCTION
+function showPage(pageId) {
+  document.querySelectorAll("section").forEach(sec => sec.classList.add("d-none"));
+  document.getElementById(pageId).classList.remove("d-none");
+}
+</script>
+  </body>
+</html>
